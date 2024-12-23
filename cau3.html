@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngày trong tháng</title>
+</head>
+
+<body>
+    <h2>Tính số ngày trong tháng</h2>
+    <label for="monthAndYear">Nhập tháng/năm (MM/yyyy):</label>
+    <input type="text" id="monthAndYear" placeholder="Ví dụ 12/2024">
+    <br><br>
+    <button onclick="calculateDays()">Tính số ngày</button>
+    <p id="result"></p>
+    <script>
+        // Hàm kiểm tra năm nhuận
+        function isLeapYear(year) {
+            if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        // Hàm tính số ngày trong tháng
+        function calculateDays() {
+            // Lấy giá trị từ input
+            let monthAndYear = document.getElementById("monthAndYear").value;
+
+            // Kiểm tra định dạng MM/yyyy
+            let pattern = /^(0[1-9]|1[0-2])\/\d{4}$/;
+            if (!pattern.test(monthAndYear)) {
+                alert("Định dạng tháng/năm không hợp lệ! Vui lòng nhập theo định dạng MM/yyyy.");
+                return;
+            }
+
+            // Chuyển tháng và năm thành số
+            monthAndYear = monthAndYear.split("/");
+
+            let month = Number(monthAndYear[0]);
+            let year = Number(monthAndYear[1]);
+
+            // Kiểm tra số tháng hợp lệ
+            if (month < 1 || month > 12 || isNaN(month) || isNaN(year)) {
+                alert("Tháng phải nằm trong khoảng từ 1 đến 12.");
+                return;
+            }
+
+            // Kiểm tra số ngày trong tháng
+            let daysInMonth;
+            switch (month) {
+                case 2:
+                    daysInMonth = isLeapYear(year) ? 29 : 28;
+                    break;
+                case 4:
+                case 6:
+                case 9:
+                case 11:
+                    daysInMonth = 30;
+                    break;
+                default: // Các tháng còn lại
+                    daysInMonth = 31;
+                    break;
+            }
+
+
+            // Hiển thị kết quả
+            document.getElementById("result").innerHTML = `Tháng ${month} năm ${year} có ${daysInMonth} ngày.`;
+        }
+    </script>
+</body>
+
+</html>

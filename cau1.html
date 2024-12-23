@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính Trung Bình Cộng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input {
+            margin: 5px 0;
+        }
+
+        button {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Tính Trung Bình Cộng</h1>
+    <p>Nhập mảng số nguyên (cách nhau bởi dấu cách, tối đa 50 phần tử):</p>
+    <input type="text" id="arrayInput" placeholder="Ví dụ: 3,6,9,12">
+    <button onclick="calculateAverage()">Tính</button>
+    <h2>Kết quả:</h2>
+    <p id="result"></p>
+
+    <script>
+        function calculateAverage() {
+            const input = document.getElementById('arrayInput').value;
+            const resultElement = document.getElementById('result');
+
+            // Chuyển chuỗi nhập vào thành mảng số nguyên
+            const numbers = input.split(',').map(num => parseInt(num.trim()));
+            // Kiểm tra điều kiện: Từng phần tử phải là số
+
+            if (numbers.some(num => isNaN(num) || num === "")) {
+                resultElement.innerText = "Mảng phải chứa toàn số nguyên hợp lệ";
+                return;
+            }
+
+
+            // Kiểm tra điều kiện mảng
+            if (numbers.length > 50) {
+                resultElement.innerText = "Số lượng phần tử không được vượt quá 50.";
+                return;
+            }
+
+            // Tính tổng và đếm các số chia hết cho 3
+            let count = 0;
+            let sum = 0;
+            for (let i of numbers) {
+                if (i % 3 === 0) {
+                    count++;
+                    sum += i
+                }
+            }
+
+            if (count === 0) {
+                resultElement.innerText = "Không có số nào trong mảng chia hết cho 3.";
+                return;
+            }
+
+            // Tính trung bình cộng
+            const average = sum / count;
+
+            resultElement.innerText = `Trung bình cộng các số chia hết cho 3 là: ${average}`;
+        }
+    </script>
+</body>
+
+</html>
